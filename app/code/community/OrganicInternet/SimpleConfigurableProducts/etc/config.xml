@@ -61,6 +61,9 @@
         <blocks>
             <adminhtml>
                 <rewrite>
+                    <catalog_product_edit_tab_super_config>OrganicInternet_SimpleConfigurableProducts_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config</catalog_product_edit_tab_super_config>
+                </rewrite>
+                <rewrite>
                     <catalog_product_edit_tab_super_config_grid>OrganicInternet_SimpleConfigurableProducts_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config_Grid</catalog_product_edit_tab_super_config_grid>
                 </rewrite>
             </adminhtml>
