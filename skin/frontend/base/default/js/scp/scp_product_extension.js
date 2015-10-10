@@ -272,7 +272,7 @@ Product.Config.prototype.updateProductStock = function(productId) {
         el.replace(stockStatusHtml);
     });
     $$('div.add-to-box').each(function(el) { 
-        el.innerHTML=addToCartHtml;
+        if(addToCartHtml != undefined) el.innerHTML=addToCartHtml;
     });
 };
 

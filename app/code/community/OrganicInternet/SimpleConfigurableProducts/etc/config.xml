@@ -2,7 +2,7 @@
 <config>
     <modules>
         <OrganicInternet_SimpleConfigurableProducts>
-            <version>0.8.2</version>
+            <version>0.8.2-wewewo</version>
         </OrganicInternet_SimpleConfigurableProducts>
     </modules>
     <global>
@@ -12,6 +12,9 @@
             </simpleconfigurableproducts>
         </helpers>
         <models>
+			<simpleconfigurableproducts>
+				<class>OrganicInternet_SimpleConfigurableProducts_Model</class>
+			</simpleconfigurableproducts>
             <catalogrule_resource>
                 <rewrite>
                     <rule>OrganicInternet_SimpleConfigurableProducts_CatalogRule_Model_Resource_Rule</rule>
@@ -104,6 +107,17 @@
                 </rewrite>
             </rss>
         </blocks>
+        <events>
+			<checkout_cart_product_update_after>
+				<observers>
+					<simpleconfigurableproducts>
+						<type>singleton</type>
+						<class>simpleconfigurableproducts/observer</class>
+						<method>quoteItemChangeSimpleProduct</method>
+					</simpleconfigurableproducts>
+				</observers>
+			</checkout_cart_product_update_after>
+		</events>
     </global>
     <frontend>
         <layout>
