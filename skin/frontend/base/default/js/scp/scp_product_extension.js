@@ -442,7 +442,7 @@ Product.Config.prototype.reloadOptionLabels = function(element){
 Product.Config.prototype.getOptionLabel = function(option, lowPrice, highPrice){
 
     var str = option.label;
-
+    
     if (!this.config.showPriceRangesInOptions) {
         return str;
     }
