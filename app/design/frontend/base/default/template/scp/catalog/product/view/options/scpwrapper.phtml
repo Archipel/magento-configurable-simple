@@ -21,19 +21,27 @@
     		}		
     	});
 	    
-    	if(spConfig.getMatchingSimpleProduct() && productAddToCartForm.validator.validate()){
+    	if((typeof(spConfig) == 'undefined' || spConfig.getMatchingSimpleProduct()) && productAddToCartForm.validator.validate()){
    		    var prices = opConfig.reloadPrice();
    		    var pdp = productDesignGetExtraPrice();
    		    if(pdp > 0){
-	   		    for(var i = 0 ; i< prices.length; i++){
-		   		    prices[i].price += pdp;
-		   		    prices[i].incl += pdp;
+	   		    for(var i = 0 ; i < prices.length; i++){
+		   		    prices[i].incl += pdp * prices[i].incl / prices[i].excl;
+		   		    prices[i].price += pdp * prices[i].price / prices[i].excl;
 		   		    prices[i].excl += pdp;
 	   		    }
    		    }
-	   		prices = applySizePrice(prices);
+   		    if(typeof(applySizePrice) != 'undefined'){
+	   			prices = applySizePrice(prices);
+   		    }
 			jQuery('.price-box').find(".regular-price .price").html(optionsPrice.formatPrice(prices[0].price));
 			jQuery('.price-box').find(".price-including-tax .price").html(optionsPrice.formatPrice(prices[0].incl));
+			jQuery('.price-box').find(".price-excluding-tax .price").html(optionsPrice.formatPrice(prices[0].excl));
+   		    for(var i = 1 ; i < prices.length; i++){
+	   		    if(prices[i].excl != prices[0].excl){
+	   				jQuery('.price-box').find(".old-price .price").html(optionsPrice.formatPrice(prices[i].excl));
+	   		    }
+   		    }
    		    updateTotalPrice(prices);
     		jQuery("#choice_qty_price").show();
     		jQuery("#selected_product .ajaxcontent").html("Some product details to be fetched from server");

@@ -507,7 +507,9 @@ document.observe("dom:loaded", function() {
         if(el.type == 'select-one') {
             if(el.options && (el.options.length > 1)) {
                 el.options[0].selected = true;
-                spConfig.reloadOptionLabels(el);
+                if(typeof(spConfig) != 'undefined'){
+                	spConfig.reloadOptionLabels(el);
+                }
             }
         }
     });
