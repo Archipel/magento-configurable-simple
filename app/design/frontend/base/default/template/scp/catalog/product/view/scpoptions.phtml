@@ -128,10 +128,11 @@ if (count($_options) || $this->getProduct()->isConfigurable()):
             });
             try {
                 optionsPrice.changePrice('options', price);
-                optionsPrice.reload();
+                var prices = optionsPrice.reload();
             } catch (e) {
 
             }
+            return prices;
         }
     }
     function validateOptionsCallback(elmId, result){

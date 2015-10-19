@@ -6,7 +6,12 @@
 ?>
 <script type="text/javascript">
     //<![CDATA[
-    try{window.opConfig = new Product.Options(<?php echo $this->getJsonConfig() ?>);}catch(e){}
+    try{
+        window.opConfig = new Product.Options(<?php echo $this->getJsonConfig() ?>);
+	    var prices = applySizePrice();
+		updateTotalPrice(prices);
+	}catch(e){}
+    
     $('product_addtocart_form').encoding = 'multipart/form-data';
     //]]>
 </script>
