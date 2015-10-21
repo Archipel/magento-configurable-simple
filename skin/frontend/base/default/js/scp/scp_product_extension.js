@@ -420,12 +420,12 @@ Product.Config.prototype.reloadOptionLabels = function(element){
     var selectedPrice;
     var childProducts = this.config.childProducts;
     
-    try {
+    /*try {
         //Don't update elements that have a selected option
         if(element.options[element.selectedIndex].config){
             return;
         }
-    } catch(e){}
+    } catch(e){}*/
 
     for(var i=0;i<element.options.length;i++){
         if(element.options[i].config){
@@ -506,7 +506,7 @@ document.observe("dom:loaded", function() {
     $('product_addtocart_form').getElements().each(function(el) {
         if(el.type == 'select-one') {
             if(el.options && (el.options.length > 1)) {
-                el.options[0].selected = true;
+                //el.options[0].selected = true;
                 spConfig.reloadOptionLabels(el);
             }
         }
