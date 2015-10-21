@@ -23,14 +23,16 @@
 	    
     	if((typeof(spConfig) == 'undefined' || spConfig.getMatchingSimpleProduct()) && productAddToCartForm.validator.validate()){
    		    var prices = opConfig.reloadPrice();
-   		    var pdp = productDesignGetExtraPrice();
-   		    if(pdp > 0){
-	   		    for(var i = 0 ; i < prices.length; i++){
-		   		    prices[i].incl += pdp * prices[i].incl / prices[i].excl;
-		   		    prices[i].price += pdp * prices[i].price / prices[i].excl;
-		   		    prices[i].excl += pdp;
+   		 	if(typeof(productDesignGetExtraPrice) != 'undefined'){
+	   		    var pdp = productDesignGetExtraPrice();
+	   		    if(pdp > 0){
+		   		    for(var i = 0 ; i < prices.length; i++){
+			   		    prices[i].incl += pdp * prices[i].incl / prices[i].excl;
+			   		    prices[i].price += pdp * prices[i].price / prices[i].excl;
+			   		    prices[i].excl += pdp;
+		   		    }
 	   		    }
-   		    }
+   		 	}
    		    if(typeof(applySizePrice) != 'undefined'){
 	   			prices = applySizePrice(prices);
    		    }
@@ -56,6 +58,6 @@
     }
     
     jQuery(document).ready(function(){
-	    jQuery("#product_addtocart_form").on("change input", scpWewewoPriceReload);
+	    jQuery("#product_addtocart_form").on("change", scpWewewoPriceReload);
     });
 </script>
