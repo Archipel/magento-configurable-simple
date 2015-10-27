@@ -9,20 +9,20 @@
 </fieldset>
 
 <script type="text/javascript">
-    $$('#product-options-wrapper dl').each(function(label) {
-        label.addClassName('last');
-    });
+	var nextbtn = jQuery('<a href="#" class="button nextbutton">Volgende</a>');
+	nextbtn.click(nextoption);
+	jQuery(".super-attribute-select").bind("change", nextoption);
+
+    var dds = jQuery(".product-options dd");
+    var dts = jQuery(".product-options dt");
+    dds.hide();
+    dts.addClass("collapsed");
+    jQuery(dts[0]).removeClass("collapsed");
+    jQuery(dds[0]).append(nextbtn)
+    jQuery(dds[0]).show();
 
     function scpWewewoPriceReload(){
-    	var oriinsertAdvice = Validation.insertAdvice;
-    	Object.extend(Validation, {
-    		insertAdvice : function(nelm, nadvice){
-    			jQuery("#choice_qty_price").before(nadvice);
-    		}		
-    	});
-	    
-    	if((typeof(spConfig) == 'undefined' || spConfig.getMatchingSimpleProduct()) && productAddToCartForm.validator.validate()){
-   		    var prices = opConfig.reloadPrice();
+		    var prices = opConfig.reloadPrice();
    		 	if(typeof(productDesignGetExtraPrice) != 'undefined'){
 	   		    var pdp = productDesignGetExtraPrice();
 	   		    if(pdp > 0){
@@ -45,16 +45,34 @@
 	   		    }
    		    }
    		    updateTotalPrice(prices);
-    		jQuery("#choice_qty_price").show();
     		jQuery("#selected_product .ajaxcontent").html("Some product details to be fetched from server");
-    	}
-    	else{
-	    	jQuery("#choice_qty_price").hide();
-    	}
+    }
 
-    	Object.extend(Validation, {
-    		insertAdvice : oriinsertAdvice
-    	});
+    function nextoption(){
+    	if(productAddToCartForm.validator.validate()){
+
+    	    var dds = jQuery(".product-options dd");
+    	    var dts = jQuery(".product-options dt");
+    	    var i = 0;
+    	    for(;i < dds.length; i++){
+        	    if(jQuery(dds[i]).is(":visible")){
+            	    continue;
+        	    }
+        	    else{
+        	    	jQuery(dds[i]).show();
+        	        jQuery(dds[i]).append(nextbtn);
+        	        jQuery(dts[i]).removeClass("collapsed");
+            	    break;
+        	    }
+    	    }
+
+        	if(i == dds.length){
+        		nextbtn.hide();
+    	    	jQuery("#choice_qty_price").show();
+    	    	jQuery(".super-attribute-select").unbind("change", nextoption);
+        	}
+    	}
+    	return false;
     }
     
     jQuery(document).ready(function(){
