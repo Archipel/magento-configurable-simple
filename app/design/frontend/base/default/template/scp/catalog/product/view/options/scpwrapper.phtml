@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	var nextbtn = jQuery('<a href="#" class="button nextbutton">Volgende</a>');
 	nextbtn.click(nextoption);
-	jQuery(".super-attribute-select").bind("change", nextoption);
+	jQuery("select.super-attribute-select, select.product-custom-option").bind("change", nextoption);
 
     var dds = jQuery(".product-options dd");
     var dts = jQuery(".product-options dt");
