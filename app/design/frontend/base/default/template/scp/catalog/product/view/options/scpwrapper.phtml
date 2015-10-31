@@ -11,5 +11,28 @@
 <script type="text/javascript">
     $$('#product-options-wrapper dl').each(function(label) {
         label.addClassName('last');
+
+    Object.extend(Validation, {
+	    isVisible : function(elm) {
+	        while(elm.tagName != 'BODY') {
+	            if(!$(elm).visible()){
+		            var jelm = jQuery(elm);
+		            if(jelm.hasClass("super-attribute-select")){
+			            var next = jelm.next();
+			            if(next.hasClass('validation-advice')){
+				            next = next.next();
+			            }
+			            if(next.is(':visible') && next.hasClass('image_picker_selector')){
+				            return true;
+			            }
+		            }
+	            	return false;
+	            }
+	            elm = elm.parentNode;
+	        }
+	        return true;
+	    },
+    });
+    
     });
 </script>
