@@ -71,6 +71,31 @@
     		jQuery("#selected_product .ajaxcontent").html("Some product details to be fetched from server");
     }
 
+    function _reconfigureoption(){
+		var dds = jQuery(".product-options dd");
+	    var dts = jQuery(".product-options dt");
+        dts.addClass("collapsed");
+	    dds.hide();
+	    var dt = jQuery(this);
+	    dt.removeClass("collapsed");
+	    var dd = dt.next();
+	    dd.show();
+	    dd.append(nextbtn);
+	    var i = 0;
+	    for(;i < dts.length; i++){
+		    if(dts[i] == dt[0]){
+			    break;
+		    }
+	    }
+    	
+	    for(;i < dts.length; i++){
+	    	jQuery(dts[i]).unbind("click", _reconfigureoption);
+    		jQuery(dts[i]).removeClass("clickable");
+	    }
+		nextbtn.show();
+    	jQuery("#choice_qty_price").hide();
+	}
+
     function nextoption(){
     	if(productAddToCartForm.validator.validate()){
 
@@ -79,20 +104,25 @@
     	    var i = 0;
     	    for(;i < dds.length; i++){
         	    if(jQuery(dds[i]).is(":visible")){
-            	    continue;
-        	    }
-        	    else{
-        	    	jQuery(dds[i]).show();
-        	        jQuery(dds[i]).append(nextbtn);
-        	        jQuery(dts[i]).removeClass("collapsed");
+            	    var jddsip1 = jQuery(dds[i+1]);
+            	    jddsip1.show();
+            	    jddsip1.append(nextbtn);
+        	        jQuery(dts[i+1]).removeClass("collapsed");
+        	        
+        	        jQuery(dts[i]).addClass("collapsed");
+        	    	jQuery(dds[i]).hide();
+        	    	for(var j = 0; j <= i; j++){ 
+        	    		jQuery(dts[j]).click(_reconfigureoption);
+        	    		jQuery(dts[j]).addClass("clickable");
+        	    	}
+        	    	
             	    break;
         	    }
     	    }
 
-        	if(i == dds.length){
+        	if(i == dds.length-1){
         		nextbtn.hide();
     	    	jQuery("#choice_qty_price").show();
-    	    	jQuery(".super-attribute-select").unbind("change", nextoption);
         	}
     	}
     	return false;
