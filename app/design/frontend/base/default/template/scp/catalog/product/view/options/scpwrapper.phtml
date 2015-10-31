@@ -11,6 +11,29 @@
 <script type="text/javascript">
 	var nextbtn = jQuery('<a href="#" class="button nextbutton">Volgende</a>');
 	nextbtn.click(nextoption);
+
+    Object.extend(Validation, {
+	    isVisible : function(elm) {
+	        while(elm.tagName != 'BODY') {
+	            if(!$(elm).visible()){
+		            var jelm = jQuery(elm);
+		            if(jelm.hasClass("super-attribute-select")){
+			            var next = jelm.next();
+			            if(next.hasClass('validation-advice')){
+				            next = next.next();
+			            }
+			            if(next.is(':visible') && next.hasClass('image_picker_selector')){
+				            return true;
+			            }
+		            }
+	            	return false;
+	            }
+	            elm = elm.parentNode;
+	        }
+	        return true;
+	    },
+    });
+    
 	jQuery("select.super-attribute-select, select.product-custom-option").bind("change", nextoption);
 
     var dds = jQuery(".product-options dd");
