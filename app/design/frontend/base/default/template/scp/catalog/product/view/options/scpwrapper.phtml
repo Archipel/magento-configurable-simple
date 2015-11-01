@@ -33,8 +33,22 @@
 	        return true;
 	    },
     });
+
+	function setDtVal(selector, val){
+		var ele = jQuery(selector);
+		var curvalele = ele.find(".curval");
+		if(curvalele.length == 0){
+			ele.append('<span class="curval">'+ (val !== undefined ? val: "") + '</span>');
+		}
+		else{
+			curvalele.html(val !== undefined ? val: "");
+		}
+	}
     
-	jQuery("select.super-attribute-select, select.product-custom-option").bind("change", nextoption);
+	jQuery("select.super-attribute-select, select.product-custom-option").bind("change", function(){
+		nextoption();
+		setDtVal(jQuery(this).parents("dd").prev(), jQuery(this).find("option:selected").text());
+	});
 
     var dds = jQuery(".product-options dd");
     var dts = jQuery(".product-options dt");
@@ -68,7 +82,6 @@
 	   		    }
    		    }
    		    updateTotalPrice(prices);
-    		jQuery("#selected_product .ajaxcontent").html("Some product details to be fetched from server");
     }
 
     function _reconfigureoption(){
@@ -122,6 +135,17 @@
 
         	if(i == dds.length-1){
         		nextbtn.hide();
+        		var sphtml = "<ul>";
+        		for(var i = 0; i <= dts.length; i++){
+            		var dti = jQuery(dts[i]);
+            		var label = dti.find("label").html();
+            		if(label !== undefined){
+                		label = label.replace(/<em.*>\*<\/em>/i, "");
+            			sphtml += "<li><label>"+label+"</label> <span class=\"curval\">"+dti.find(".curval").html()+"</span></li>";
+            		}
+        		}
+        		sphtml += "</ul>";
+        		jQuery("#selected_product .dynamic-content").html(sphtml);
     	    	jQuery("#choice_qty_price").show();
         	}
     	}
