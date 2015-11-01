@@ -46,8 +46,8 @@
 	}
     
 	jQuery("select.super-attribute-select, select.product-custom-option").bind("change", function(){
-		nextoption();
 		setDtVal(jQuery(this).parents("dd").prev(), jQuery(this).find("option:selected").text());
+		nextoption();
 	});
 
     var dds = jQuery(".product-options dd");
