@@ -49,6 +49,11 @@
 		setDtVal(jQuery(this).parents("dd").prev(), jQuery(this).find("option:selected").text());
 		nextoption();
 	});
+    
+	jQuery("input[type='radio'].product-custom-option").bind("click", function(){
+		setDtVal(jQuery(this).parents("dd").prev(), jQuery("label[for='"+jQuery(this).attr("id")+"']").text());
+		nextoption();
+	});
 
     var dds = jQuery(".product-options dd");
     var dts = jQuery(".product-options dt");
