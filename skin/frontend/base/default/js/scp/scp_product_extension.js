@@ -156,8 +156,8 @@ Product.Config.prototype.reloadPrice = function() {
     }
 
     if(childProductId){
-        var price = childProducts[childProductId]["price"];
-        var finalPrice = childProducts[childProductId]["finalPrice"];
+        var price = parseFloat(childProducts[childProductId]["price"]);
+        var finalPrice = parseFloat(childProducts[childProductId]["finalPrice"]);
         optionsPrice.productPrice = finalPrice;
         optionsPrice.productPriceBeforeRedemptions = finalPrice;
         optionsPrice.productOldPrice = price;
@@ -182,8 +182,8 @@ Product.Config.prototype.reloadPrice = function() {
     } else {
         var cheapestPid = this.getProductIdOfCheapestProductInScope("finalPrice");
         //var mostExpensivePid = this.getProductIdOfMostExpensiveProductInScope("finalPrice");
-        var price = childProducts[cheapestPid]["price"];
-        var finalPrice = childProducts[cheapestPid]["finalPrice"];
+        var price = parseFloat(childProducts[cheapestPid]["price"]);
+        var finalPrice = parseFloat(childProducts[cheapestPid]["finalPrice"]);
         optionsPrice.productPrice = finalPrice;
         optionsPrice.productOldPrice = price;
         optionsPrice.reload();
@@ -316,10 +316,12 @@ Product.Config.prototype.showCustomOptionsBlock = function(productId, parentId) 
         //$$('span.scp-please-wait').each(function(el) {el.show()});
 
         //prodForm.getElements().each(function(el) {el.disable()});
+    	jQuery(".product-tier-pricing-box").remove();
         new Ajax.Updater('SCPcustomOptionsDiv', coUrl, {
           method: 'get',
           evalScripts: true,
           onComplete: function() {
+        	  jQuery('.add-to-box').before(jQuery(".product-tier-pricing-box"));
               $$('span.scp-please-wait').each(function(el) {el.hide()});
               Effect.Fade('SCPcustomOptionsDiv', { duration: 0.5, from: 0.5, to: 1 });
               //prodForm.getElements().each(function(el) {el.enable()});
