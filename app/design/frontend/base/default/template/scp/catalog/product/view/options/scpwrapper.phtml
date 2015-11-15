@@ -45,12 +45,12 @@
 		}
 	}
     
-	jQuery("select.super-attribute-select, select.product-custom-option").bind("change", function(){
+	jQuery("select.super-attribute-select, select.product-custom-option").live("change", function(){
 		setDtVal(jQuery(this).parents("dd").prev(), jQuery(this).find("option:selected").text());
 		nextoption();
 	});
     
-	jQuery("input[type='radio'].product-custom-option:not(input[name='design_option'])").bind("click", function(){
+	jQuery("input[type='radio'].product-custom-option:not(input[name='design_option'])").live("click", function(){
 		setDtVal(jQuery(this).parents("dd").prev(), jQuery("label[for='"+jQuery(this).attr("id")+"']").text());
 		nextoption();
 	});
