@@ -152,9 +152,9 @@
         		var sphtml = "<ul>";
         		for(var i = 0; i <= dts.length; i++){
             		var dti = jQuery(dts[i]);
-            		var label = dti.find("label").html();
+            		var label = dti.find("label").text();
             		if(label !== undefined){
-                		label = label.replace(/<em.*>\*<\/em>/i, "");
+                		label = label.replace(/\*/i, "");
             			sphtml += "<li><label>"+label+"</label> <span class=\"curval\">"+dti.find(".curval").html()+"</span></li>";
             		}
         		}
