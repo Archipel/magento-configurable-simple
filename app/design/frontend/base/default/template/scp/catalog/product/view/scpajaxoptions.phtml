@@ -6,6 +6,13 @@
 /* @var $this ShirtWorld_ShirtDesigner_Block_Catalog_Product_View_Options */
 
 $product = $this->getProduct();
+$parent = null;
+if($product->getTypeID() == 'simple'){
+	$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+	if(count($parentIds)){
+		$parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+	}
+}
 
 $_finalPrice = $product->getFinalPrice();
 if ($product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE) {
@@ -36,12 +43,43 @@ foreach ($product->getTierPrice() as $tierPrice) {
     //<![CDATA[
     try{
         window.opConfig = new Product.Options(<?php echo $this->getJsonConfig() ?>);
-        scpWewewoPriceReload();
+        <?php 
+
+        $_sizesModel = Mage::getModel('www_productsizes/product_size');
+        if($_sizesModel){
+        	$_sizes = $_sizesModel->getCollectionForProduct($parent ? $parent : $product);
+        }
+        else{
+        	$_sizes = array();
+        }
+        foreach($_sizes as $s){
+        	/* @var $s WeynWebWorks_ProductSizes_Model_Product_Size */
+        	$prices = $s->getPrices($product);
+        		
+		?>
+        	productSizeConfig[<?php echo $s->getId(); ?>].price = {
+        		"fixed" : <?php echo floatval($prices["price_fixed"]); ?>,
+        		"fixedType" : "<?php echo $prices["price_fixed_type"]; ?>",
+        		<?php if($s->getNDims() >= 1){ ?>
+        		"circumference" : <?php echo floatval($prices["price_circumference"]); ?>,
+        		"circumferenceType" : "<?php echo $prices["price_circumference_type"]; ?>",
+        		<?php if($s->getNDims() >= 2){ ?>
+        		"surface" : <?php echo floatval($prices["price_surface"]); ?>,
+        		"surfaceType" : "<?php echo $prices["price_surface_type"]; ?>",
+        		<?php if($s->getNDims() >= 3){ ?>
+        		"volume" : <?php echo floatval($prices["price_volume"]); ?>,
+        		"volumeType" : "<?php $prices["price_volume_type"]; ?>"
+        		<?php }}} ?>
+        	};
+        <?php }; ?>
         
         optionsPrice.tierPrices = <?php echo json_encode($_tierPrices); ?>;
         optionsPrice.tierPricesInclTax = <?php echo json_encode($_tierPricesInclTax); ?>;
         optionsPrice.tierPricesQty = <?php echo json_encode($_tierPricesQty); ?>;
-	}catch(e){}
+        scpWewewoPriceReload();
+	}catch(e){
+		console.log(e);
+	}
     
     $('product_addtocart_form').encoding = 'multipart/form-data';
     //]]>
