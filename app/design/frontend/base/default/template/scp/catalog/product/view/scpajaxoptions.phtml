@@ -55,6 +55,7 @@ foreach ($product->getTierPrice() as $tierPrice) {
         foreach($_sizes as $s){
         	/* @var $s WeynWebWorks_ProductSizes_Model_Product_Size */
         	$prices = $s->getPrices($product);
+        	$margins = $s->getProductMargins($product);
         		
 		?>
         	productSizeConfig[<?php echo $s->getId(); ?>].price = {
@@ -71,7 +72,14 @@ foreach ($product->getTierPrice() as $tierPrice) {
         		"volumeType" : "<?php $prices["price_volume_type"]; ?>"
         		<?php }}} ?>
         	};
-        <?php }; ?>
+    		<?php if($s->getNDims() >= 1){?>
+    			productSizeConfig[<?php echo $s->getId(); ?>].margins.width = <?php echo (($margins && $margins->getWidthmarge() !== null) ? $margins->getWidthmarge() : $s->getWidthmarge()); ?>;
+    	    <?php } if($s->getNDims() >= 2){ ?>
+		    	productSizeConfig[<?php echo $s->getId(); ?>].margins.height = <?php echo (($margins && $margins->getHeightmarge() !== null) ? $margins->getHeightmarge() : $s->getHeightmarge()); ?>;   
+    	    <?php } if($s->getNDims() >= 3){ ?>
+		    	productSizeConfig[<?php echo $s->getId(); ?>].margins.depth = <?php echo (($margins && $margins->getDepthmarge() !== null) ? $margins->getDepthmarge() : $s->getDepthmarge()); ?>;
+        	<?php } ?>
+        <?php };?>
         
         optionsPrice.tierPrices = <?php echo json_encode($_tierPrices); ?>;
         optionsPrice.tierPricesInclTax = <?php echo json_encode($_tierPricesInclTax); ?>;
