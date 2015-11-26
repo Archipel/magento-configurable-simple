@@ -78,9 +78,9 @@
 	   		    var pdp = productDesignGetExtraPrice();
 	   		    if(pdp > 0){
 		   		    for(var i = 0 ; i < prices.length; i++){
-			   		    prices[i].incl += pdp * prices[i].incl / prices[i].excl;
-			   		    prices[i].price += pdp * prices[i].price / prices[i].excl;
 			   		    prices[i].excl += pdp;
+			   		    prices[i].incl += pdp * (1+optionsPrice.defaultTax/100);
+			   		    prices[i].price = ((optionsPrice.includeTax && optionsPrice.includeTax != "false") ? prices[i].excl: prices[i].incl);
 		   		    }
 	   		    }
    		 	}
@@ -154,8 +154,10 @@
             		var dti = jQuery(dts[i]);
             		var label = dti.find("label").text();
             		if(label !== undefined){
-                		label = label.replace(/\*/i, "");
-            			sphtml += "<li><label>"+label+"</label> <span class=\"curval\">"+dti.find(".curval").html()+"</span></li>";
+            			if(dti.find(".curval").length > 0){
+	                		label = label.replace(/\*/i, "");
+	            			sphtml += "<li><label>"+label+"</label> <span class=\"curval\">"+dti.find(".curval").html()+"</span></li>";
+            			}
             		}
         		}
         		sphtml += "</ul>";
