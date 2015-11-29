@@ -9,4 +9,19 @@ class OrganicInternet_SimpleConfigurableProducts_Model_Observer {
 		}
 	}
 	
+	public function addParentCustomOptions($observer){
+		$transport = $observer->getTransport();
+		$buyRequest = $observer->getBuyRequest();
+		$product = $observer->getProduct();
+		$parent = Mage::helper('simpleconfigurableproducts')->getParentConfigurableProduct($product);
+		if($parent && $transport && $buyRequest){
+			foreach($parent->getOptions() as $o){
+				$id = $o->getId();
+				if(!array_key_exists($id, $transport->options) && array_key_exists($id, $buyRequest->options)){
+					$transport->options[$id] = $buyRequest->options[$id];
+				} 
+			}
+		}
+	}
+	
 }

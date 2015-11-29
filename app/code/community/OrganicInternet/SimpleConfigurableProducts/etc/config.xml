@@ -117,6 +117,15 @@
 					</simpleconfigurableproducts>
 				</observers>
 			</checkout_cart_product_update_after>
+			<catalog_product_type_prepare_full_options>
+				<observers>
+					<simpleconfigurableproducts>
+						<type>singleton</type>
+						<class>simpleconfigurableproducts/observer</class>
+						<method>addParentCustomOptions</method>
+					</simpleconfigurableproducts>
+				</observers>
+			</catalog_product_type_prepare_full_options>
 		</events>
     </global>
     <frontend>
