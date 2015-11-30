@@ -401,6 +401,12 @@ Product.OptionsPrice.prototype.reloadPriceLabels = function(productPriceIsKnown)
 //SCP: Forces the 'next' element to have it's optionLabels reloaded too
 Product.Config.prototype.configureElement = function(element) {
     this.reloadOptionLabels(element);
+    if(jQuery(element).data('imagemode') == 2){
+    	jQuery(element).imagepicker({
+            hide_select : true,
+            show_label  : false
+          });
+    }
     if(element.value){
         this.state[element.config.id] = element.value;
         if(element.nextSetting){
@@ -408,6 +414,12 @@ Product.Config.prototype.configureElement = function(element) {
             this.fillSelect(element.nextSetting);
             this.reloadOptionLabels(element.nextSetting);
             this.resetChildren(element.nextSetting);
+            if(jQuery(element.nextSetting).data('imagemode') == 2){
+            	jQuery(element.nextSetting).imagepicker({
+    	            hide_select : true,
+    	            show_label  : false
+    	          });
+            }
         }
     }
     else {
