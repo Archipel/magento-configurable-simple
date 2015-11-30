@@ -110,7 +110,7 @@
 		   		    for(var i = 0 ; i < prices.length; i++){
 			   		    prices[i].excl += pdp;
 			   		    prices[i].incl += pdp * (1+optionsPrice.defaultTax/100);
-			   		    prices[i].price = ((optionsPrice.includeTax && optionsPrice.includeTax != "false") ? prices[i].excl: prices[i].incl);
+			   		    prices[i].price = ((optionsPrice.includeTax && optionsPrice.includeTax != "false") ? prices[i].incl: prices[i].excl);
 		   		    }
 	   		    }
    		 	}
