@@ -59,6 +59,36 @@
 		jQuery("select.super-attribute-select, select.product-custom-option").each(function(){
 			setDtVal(jQuery(this).parents("dd").prev(), jQuery(this).find("option:selected").text());
 		});
+		jQuery("select.product-custom-option").each(function(){
+			var $this = jQuery(this);
+			var options = $this.find('option');
+			var imagemode = 0;
+			
+			for(var i = options.length-1; i >= 0; i--){
+				var option = jQuery(options[i]);
+				var img = option.data('img-src');
+				if(typeof(img) != 'undefined' && img != '' && img != null){
+					if(imagemode == 0){
+						if(i == options.length-1){
+							imagemode = 2;
+						}
+						else{
+							imagemode = 1;
+							break;
+						}
+					}
+				}
+				else if(imagemode == 2 && option.prop('value') != ''){
+					imagemode = 1;
+				}
+			}
+			if(imagemode == 2){
+				$this.imagepicker({
+		            hide_select : true,
+		            show_label  : false
+		        });
+			}
+		});
 		jQuery("input[type='radio'].product-custom-option:not(input[name='design_option'], .product-size-option)").each(function(){
 			setDtVal(jQuery(this).parents("dd").prev(), jQuery("label[for='"+jQuery(this).attr("id")+"']").text());
 		});
