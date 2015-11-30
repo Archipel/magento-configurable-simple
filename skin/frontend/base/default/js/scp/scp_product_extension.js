@@ -316,11 +316,11 @@ Product.Config.prototype.showCustomOptionsBlock = function(productId, parentId) 
         //$$('span.scp-please-wait').each(function(el) {el.show()});
 
         //prodForm.getElements().each(function(el) {el.disable()});
-    	jQuery(".product-tier-pricing-box").remove();
         new Ajax.Updater('SCPcustomOptionsDiv', coUrl, {
           method: 'get',
           evalScripts: true,
           onComplete: function() {
+        	  jQuery("#choice_qty_price .product-tier-pricing-box").remove();
         	  jQuery('.add-to-box').before(jQuery(".product-tier-pricing-box"));
               $$('span.scp-please-wait').each(function(el) {el.hide()});
               Effect.Fade('SCPcustomOptionsDiv', { duration: 0.5, from: 0.5, to: 1 });
