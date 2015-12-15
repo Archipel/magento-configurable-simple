@@ -1,10 +1,7 @@
 <?php
 //SCP: This forces the js below to be included for configurable products, as with SCP some configurable products' associated products may have custom options and therefore need it.
-?>
-<?php $_options = Mage::helper('core')->decorateArray($this->getOptions()) ?>
-<?php
-if (count($_options) || $this->getProduct()->isConfigurable()):
-//if (count($_options)):
+
+if (Mage::helper('www_tools')->productHasOptions($this->getProduct())):
 ?>
     <script type="text/javascript">
     //<![CDATA[
@@ -149,6 +146,7 @@ if (count($_options) || $this->getProduct()->isConfigurable()):
     //]]>
     </script>
     <dl>
+	<?php $_options = Mage::helper('core')->decorateArray($this->getOptions()) ?>
     <?php foreach($_options as $_option): ?>
         <?php echo $this->getOptionHtml($_option) ?>
     <?php endforeach; ?>
