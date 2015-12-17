@@ -43,6 +43,12 @@ foreach ($product->getTierPrice() as $tierPrice) {
     //<![CDATA[
     try{
         window.opConfig = new Product.Options(<?php echo $this->getJsonConfig() ?>);
+
+		var curqty = jQuery("#qty").val();
+		if(curqty < <?php echo floatval($product->getStockItem()->getMinSaleQty()); ?>){
+			jQuery("#qty").val(<?php echo floatval($product->getStockItem()->getMinSaleQty()); ?>);
+		}
+		jQuery("#qty").attr('min', <?php echo floatval($product->getStockItem()->getMinSaleQty()); ?>);	
         <?php 
 
         $_sizesModel = Mage::getModel('www_productsizes/product_size');
