@@ -117,6 +117,9 @@
    		    if(typeof(applySizePrice) != 'undefined'){
 	   			prices = applySizePrice(prices);
    		    }
+   		    if(typeof(applyTextilePrice) != 'undefined'){
+	   			prices = applyTextilePrice(prices);
+   		    }
 			jQuery('.price-box').find(".regular-price .price").html(optionsPrice.formatPrice(prices[0].price));
 			jQuery('.price-box').find(".price-including-tax .price").html(optionsPrice.formatPrice(prices[0].incl));
 			jQuery('.price-box').find(".price-excluding-tax .price").html(optionsPrice.formatPrice(prices[0].excl));
