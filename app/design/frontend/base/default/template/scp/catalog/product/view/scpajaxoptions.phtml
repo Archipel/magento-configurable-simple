@@ -90,6 +90,8 @@ foreach ($product->getTierPrice() as $tierPrice) {
         optionsPrice.tierPrices = <?php echo json_encode($_tierPrices); ?>;
         optionsPrice.tierPricesInclTax = <?php echo json_encode($_tierPricesInclTax); ?>;
         optionsPrice.tierPricesQty = <?php echo json_encode($_tierPricesQty); ?>;
+        optionsPrice.onlyTierQtys = <?php echo ($product->getOnlyTierQtys() ? 'true' : 'false'); ?>;
+        qtyInputOrDiv();
         scpWewewoPriceReload();
 	}catch(e){
 		console.log(e);
