@@ -14,22 +14,22 @@
 
     Object.extend(Validation, {
 	    isVisible : function(elm) {
-	        while(elm.tagName != 'BODY') {
-	            if(!$(elm).visible()){
-		            var jelm = jQuery(elm);
-		            if(jelm.hasClass("super-attribute-select")){
-			            var next = jelm.next();
-			            if(next.hasClass('validation-advice')){
-				            next = next.next();
-			            }
-			            if(next.is(':visible') && next.hasClass('image_picker_selector')){
-				            return true;
-			            }
+            var jelm = jQuery(elm);
+            if(!jelm.is(':visible')){
+	            if(jelm.hasClass("super-attribute-select")){
+		            var next = jelm.next();
+		            if(next.hasClass('validation-advice')){
+			            next = next.next();
 		            }
-	            	return false;
+		            if(next.is(':visible') && next.hasClass('image_picker_selector')){
+			            return true;
+		            }
 	            }
-	            elm = elm.parentNode;
-	        }
+	            else if(jelm.prop('name') == 'design_option'){
+		            return jelm.parent().is(':visible');
+	            }
+            	return false;
+            }
 	        return true;
 	    },
     });
