@@ -28,6 +28,7 @@ if ($product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE) {
 $_tierPricesQty = array();
 $_tierPrices = array();
 $_tierPricesInclTax = array();
+$_tierPricesDeliveryTime = array();
 foreach ($product->getTierPrice() as $tierPrice) {
 	$_tierPrices[] = Mage::helper('core')->currency(
 			Mage::helper('tax')->getPrice($product, (float)$tierPrice['website_price'], false) - $_priceExclTax
@@ -36,6 +37,7 @@ foreach ($product->getTierPrice() as $tierPrice) {
 			Mage::helper('tax')->getPrice($product, (float)$tierPrice['website_price'], true) - $_priceInclTax
 			, false, false);
 	$_tierPricesQty[] = $tierPrice['price_qty'];
+	$_tierPricesDeliveryTime[] = $tierPrice['delivery_time'];
 }
 
 ?>
@@ -58,7 +60,7 @@ foreach ($product->getTierPrice() as $tierPrice) {
         else{
         	$_sizes = array();
         }
-        foreach($_sizes as $s){
+        foreach($_sizes as $s){ 
         	/* @var $s WeynWebWorks_ProductSizes_Model_Product_Size */
         	$prices = $s->getPrices($product);
         	$margins = $s->getProductMargins($product);
@@ -90,6 +92,7 @@ foreach ($product->getTierPrice() as $tierPrice) {
         optionsPrice.tierPrices = <?php echo json_encode($_tierPrices); ?>;
         optionsPrice.tierPricesInclTax = <?php echo json_encode($_tierPricesInclTax); ?>;
         optionsPrice.tierPricesQty = <?php echo json_encode($_tierPricesQty); ?>;
+        optionsPrice.tierPricesDeliveryTime = <?php echo json_encode($_tierPricesDeliveryTime); ?>;
         optionsPrice.onlyTierQtys = <?php echo ($product->getOnlyTierQtys() ? 'true' : 'false'); ?>;
         qtyInputOrDiv();
         scpWewewoPriceReload();
