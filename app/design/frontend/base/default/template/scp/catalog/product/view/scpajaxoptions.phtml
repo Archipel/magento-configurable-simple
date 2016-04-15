@@ -54,7 +54,7 @@ foreach ($product->getTierPrice() as $tierPrice) {
         <?php 
 
         $_sizesModel = Mage::getModel('www_productsizes/product_size');
-        if($_sizesModel){
+        if($_sizesModel && !$parent->getProductSizesToAttriboption()){
         	$_sizes = $_sizesModel->getCollectionForProduct($parent ? $parent : $product);
         }
         else{
