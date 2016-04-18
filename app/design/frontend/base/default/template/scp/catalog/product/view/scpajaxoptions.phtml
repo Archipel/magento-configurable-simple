@@ -29,13 +29,14 @@ $_tierPricesQty = array();
 $_tierPrices = array();
 $_tierPricesInclTax = array();
 $_tierPricesDeliveryTime = array();
+$store = Mage::getModel('core/store');
 foreach ($product->getTierPrice() as $tierPrice) {
-	$_tierPrices[] = Mage::helper('core')->currency(
-			Mage::helper('tax')->getPrice($product, (float)$tierPrice['website_price'], false) - $_priceExclTax
-			, false, false);
-	$_tierPricesInclTax[] = Mage::helper('core')->currency(
-			Mage::helper('tax')->getPrice($product, (float)$tierPrice['website_price'], true) - $_priceInclTax
-			, false, false);
+	$_tierPrices[] = $store->roundPrice( 
+		Mage::helper('tax')->getPrice($product, (float)$tierPrice['website_price'], false) - $_priceExclTax, false, false
+	);
+	$_tierPricesInclTax[] = $store->roundPrice(
+		Mage::helper('tax')->getPrice($product, (float)$tierPrice['website_price'], true) - $_priceInclTax, false, false
+	);
 	$_tierPricesQty[] = $tierPrice['price_qty'];
 	$_tierPricesDeliveryTime[] = $tierPrice['delivery_time'];
 }
