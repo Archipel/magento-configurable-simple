@@ -124,19 +124,40 @@ Product.OptionsPrice.prototype.updateSpecialPriceDisplay = function(price, final
 
     var prodForm = $('product_addtocart_form');
 
-    var specialPriceBox = prodForm.select('p.special-price');
     var oldPricePriceBox = prodForm.select('p.old-price, p.was-old-price');
     var magentopriceLabel = prodForm.select('span.price-label');
 
     if (price == finalPrice) {
-        specialPriceBox.each(function(x) {x.hide();});
+    	prodForm.select('.price-label').each(function(x){
+    		x.hide();
+    	});
+    	prodForm.select('.price-excluding-tax .label').each(function(x){
+    		x.hide();
+    	});
+        var specialPriceBox = prodForm.select('p.special-price');
+        //specialPriceBox.each(function(x) {x.hide();});
+    	specialPriceBox.each(function(x) {
+            x.removeClassName('special-price');
+            x.addClassName('regular-price');
+        });
         magentopriceLabel.each(function(x) {x.hide();});
         oldPricePriceBox.each(function(x) {
             x.removeClassName('old-price');
             x.addClassName('was-old-price');
         });
     }else{
-        specialPriceBox.each(function(x) {x.show();});
+    	prodForm.select('.price-label').each(function(x){
+    		x.show();
+    	});
+    	prodForm.select('.price-excluding-tax .label').each(function(x){
+    		x.show();
+    	});
+        var specialPriceBox = prodForm.select('p.regular-price');
+        //specialPriceBox.each(function(x) {x.show();});
+    	specialPriceBox.each(function(x) {
+            x.removeClassName('regular-price');
+            x.addClassName('special-price');
+        });
         magentopriceLabel.each(function(x) {x.show();});
         oldPricePriceBox.each(function(x) {
             x.removeClassName('was-old-price');
